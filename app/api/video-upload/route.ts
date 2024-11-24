@@ -20,7 +20,7 @@ interface CloudinaryUploadResult {
 }
 
 export async function POST(req: NextRequest) {
-	const { userId } = auth();
+	const userId = (await auth()).userId;
 	if (!userId) {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
 				orignalSize: orignalSize,
 				publicId: result.public_id,
 				compressedSize: String(result.bytes),
-				duration: result.duration | 0,
+				duration: result?.duration || 0,
 			},
 		});
 	} catch (error) {

@@ -15,7 +15,7 @@ interface CloudinaryUploadResult {
 }
 
 export async function POST(req: NextRequest) {
-	const { userId } = auth();
+	const userId = (await auth()).userId;
 	if (!userId) {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
